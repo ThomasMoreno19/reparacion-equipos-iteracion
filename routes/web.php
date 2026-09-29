@@ -16,6 +16,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/panel', [PanelController::class, 'index'])->name('admin.panel');
         Route::post('/empresas', [PanelController::class, 'storeCompany'])->name('admin.company.store');
+        Route::put('/empresas/{companyId}', [PanelController::class, 'updateCompany'])->whereNumber('companyId')->name('admin.company.update');
+        Route::delete('/empresas/{companyId}', [PanelController::class, 'destroyCompany'])->whereNumber('companyId')->name('admin.company.destroy');
         Route::post('/movimientos/importar', [PanelController::class, 'import'])->name('admin.import');
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
     });

@@ -3,6 +3,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin-modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin-options.css') }}">
 @endpush
 
 @section('content')
@@ -35,6 +36,16 @@
         <div class="companies-grid">
             @forelse($companies as $company)
                 <article class="company-card">
+                    <details class="card-options">
+                        <summary aria-label="Opciones de {{ $company->nombre }}">⋮</summary>
+                        <div class="options-menu">
+                            <button type="button" data-edit-company data-edit-url="{{ route('admin.company.update', $company->id) }}" data-edit-id="{{ $company->id }}" data-edit-name="{{ $company->nombre }}">Editar empresa</button>
+                            <form method="POST" action="{{ route('admin.company.destroy', $company->id) }}" onsubmit="return confirm('¿Eliminar esta empresa y sus equipos?')">
+                                @csrf @method('DELETE')
+                                <button type="submit">Eliminar empresa</button>
+                            </form>
+                        </div>
+                    </details>
                     <div class="company-image-wrap">
                         <img src="{{ $company->logo_url ?: asset('images/company-placeholder.svg') }}" alt="Logo de {{ $company->nombre }}" class="company-image">
                     </div>
@@ -64,6 +75,18 @@
         @if(session('import_errors'))<div class="admin-error"><strong>Filas con error</strong><ul>@foreach(session('import_errors') as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
     </section>
 </div>
+<div class="modal-backdrop is-hidden" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <section class="import-modal">
+        <div class="form-panel-heading"><h2 id="edit-modal-title">Editar empresa</h2><button type="button" class="close-button" data-close-edit>&times;</button></div>
+        <form class="admin-form" id="edit-company-form" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
+            <label>Nombre de la empresa<input name="nombre" id="edit-company-name" required maxlength="150"></label>
+            <label>Nuevo logo<input type="file" name="imagen" accept="image/*"></label>
+            <label class="checkbox-label"><input type="checkbox" name="eliminar_logo" value="1"> Eliminar logo actual</label>
+            <button class="admin-button" type="submit">Guardar cambios</button>
+        </form>
+    </section>
+</div>
 <script>
 document.querySelectorAll('[data-toggle]').forEach(function (button) {
     button.addEventListener('click', function () { document.getElementById(button.dataset.toggle).classList.toggle('is-hidden'); });
@@ -77,5 +100,14 @@ document.querySelectorAll('[data-scroll-import]').forEach(function (button) {
 });
 document.querySelector('[data-close-import]').addEventListener('click', function () { document.getElementById('import-modal').classList.add('is-hidden'); });
 document.getElementById('import-modal').addEventListener('click', function (event) { if (event.target === this) this.classList.add('is-hidden'); });
+document.querySelectorAll('[data-edit-company]').forEach(function (button) {
+    button.addEventListener('click', function () {
+        document.getElementById('edit-company-form').action = button.dataset.editUrl;
+        document.getElementById('edit-company-name').value = button.dataset.editName;
+        document.getElementById('edit-modal').classList.remove('is-hidden');
+    });
+});
+document.querySelector('[data-close-edit]').addEventListener('click', function () { document.getElementById('edit-modal').classList.add('is-hidden'); });
+document.getElementById('edit-modal').addEventListener('click', function (event) { if (event.target === this) this.classList.add('is-hidden'); });
 </script>
 @endsection
