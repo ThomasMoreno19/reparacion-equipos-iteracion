@@ -1,1 +1,83 @@
-.company-card{position:relative}.card-options{position:absolute;top:16px;right:18px;z-index:3}.card-options summary{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:6px;color:#fff;font-size:1.7rem;font-weight:bold;line-height:1;cursor:pointer;list-style:none}.card-options summary::-webkit-details-marker{display:none}.card-options summary:hover,.card-options[open] summary{background:#ed1764}.options-menu{position:absolute;top:40px;right:0;width:180px;padding:6px;border:1px solid #c16099;border-radius:7px;background:#46062f;box-shadow:0 8px 20px #17000f99}.options-menu button{display:block;width:100%;padding:10px;border:0;border-radius:4px;background:transparent;color:#fff;text-align:left;cursor:pointer}.options-menu button:hover{background:#ed1764}.options-menu form{margin:0}.checkbox-label{display:flex!important;grid-template-columns:auto 1fr;align-items:center;gap:10px}.checkbox-label input{width:auto}.edit-modal-title{color:#fff}
+.company-card {
+    position: relative;
+}
+
+.card-options {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    z-index: 3;
+}
+
+.card-options summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 1.7rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    list-style: none;
+}
+
+.card-options summary::-webkit-details-marker {
+    display: none;
+}
+
+.card-options summary:hover,
+.card-options[open] summary {
+    background: var(--gold);
+    color: #1d1d1d;
+}
+
+.options-menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 180px;
+    padding: 6px;
+    border: 1px solid #505050;
+    border-radius: 7px;
+    background: var(--dark);
+    box-shadow: 0 8px 20px #0009;
+}
+
+.options-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.options-menu button:hover {
+    background: var(--gold);
+    color: #1d1d1d;
+}
+
+.options-menu form {
+    margin: 0;
+}
+
+.checkbox-label {
+    display: flex !important;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-label input {
+    width: auto;
+}
+
+.edit-modal-title {
+    color: #fff;
+}
