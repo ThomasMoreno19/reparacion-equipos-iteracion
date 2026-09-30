@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Allow Hostinger's certificate validation path.
+    RewriteRule ^\.well-known(?:/|$) - [L]
+
+    # Block dotfiles and Laravel's private source directories from HTTP access.
+    RewriteRule (^|/)\. - [F,L]
+    RewriteRule ^(?:app|bootstrap|config|database|lang|node_modules|resources|routes|tests|vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:artisan|composer\.(?:json|lock)|phpunit\.xml|package(?:-lock)?\.json|vite\.config\.js|README(?:\.md)?|AGENTS\.md|CLAUDE\.md)(?:/|$) - [F,L,NC]
+
+    # Requests already under public are handled by public/.htaccess.
+    RewriteRule ^public(?:/|$) - [L]
+
+    # Serve Laravel's public directory from the site's root URL.
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

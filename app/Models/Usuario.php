@@ -49,4 +49,9 @@ class Usuario extends Authenticatable
     {
         return $this->contrasena;
     }
+
+    public function getAuthPasswordName(): string
+    {
+        return 'contrasena';
+    }
 }

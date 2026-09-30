@@ -8,6 +8,14 @@ use PHPUnit\Framework\TestCase;
 
 class UserRoleTest extends TestCase
 {
+    public function test_authentication_and_password_rehash_use_the_contrasena_column(): void
+    {
+        $user = new Usuario(['contrasena' => 'password-hash']);
+
+        $this->assertSame('contrasena', $user->getAuthPasswordName());
+        $this->assertSame('password-hash', $user->getAuthPassword());
+    }
+
     public function test_admin_can_access_only_its_assigned_company(): void
     {
         $admin = new Usuario(['role' => Role::Admin, 'id_empresa' => 7]);
